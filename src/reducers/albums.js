@@ -1,27 +1,22 @@
 const initialState = {
-  albums: [
-    {
-      id: 1,
-      title: 'Nevermind'
-    }
-  ]
+  isReady: false,
+  items: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "SET_ALBUMS":
+    case 'SET_ALBUMS':
       return {
         ...state,
-        albums: action.payload
+        items: action.payload,
+        isReady: true
       };
-    case "ADD_ALBUMS":
+    case 'SET_IS_READY':
       return {
         ...state,
-        albums: [
-        ...state.albums,
-        action.payload
-      ]
-    };
+        isReady: action.payload
+      }
+      break;
     default:
       return state;
   }
