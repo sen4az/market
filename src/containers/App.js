@@ -6,8 +6,6 @@ import orderBy from 'lodash/orderBy';
 
 const sortBy = (albums, filterBy) => {
   switch (filterBy) {
-    case "all":
-      return albums;
     case "mass_high":
       return orderBy(albums, "mass", "desc");
     case "mass_low":
@@ -19,8 +17,17 @@ const sortBy = (albums, filterBy) => {
   }
 }
 
-const mapStateToProps = ({albums}) => ({
-  albums: sortBy(albums.items, albums.filterBy),
+const filterAlbums = (albums, searchQuery) => albums.filter(i =>
+    i.name.toLowerCase().indexOf(searchQuery.toLowerCase()) >= 0
+);
+
+
+const searchAlbums = (albums, filterBy, searchQuery) => {
+  return sortBy(filterAlbums(albums, searchQuery), filterBy);
+}
+
+const mapStateToProps = ({albums, filter}) => ({
+  albums: albums.items && searchAlbums(albums.items, filter.filterBy, filter.searchQuery),
   isReady: albums.isReady
 });
 

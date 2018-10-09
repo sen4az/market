@@ -12,7 +12,7 @@ class App extends Component {
   componentWillMount() {
     const {setAlbums} = this.props
     axios.get("https://swapi.co/api/people/").then(response => {
-      console.log(response.data.results);
+      //console.log(response.data.results);
       setAlbums(response.data.results);
     });
   }
